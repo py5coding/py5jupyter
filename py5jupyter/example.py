@@ -33,7 +33,7 @@ class ExampleWidget(DOMWidget):
     value = Unicode('Hello World').tag(sync=True)
 
 # @register
-class Py5SketchPortalWidget(DOMWidget):
+class Py5SketchPortal(DOMWidget):
     _model_module = Unicode(module_name).tag(sync=True)
     _model_module_version = Unicode(module_version).tag(sync=True)
     _view_module = Unicode(module_name).tag(sync=True)
@@ -50,7 +50,7 @@ class Py5SketchPortalWidget(DOMWidget):
                            "for styling the widget.").tag(sync=True)
 
     def __init__(self, sketch, *args, **kwargs):
-        super(Py5SketchPortalWidget, self).__init__(*args, **kwargs)
+        super(Py5SketchPortal, self).__init__(*args, **kwargs)
         self.sketch = sketch
         self.on_msg(self._handle_frontend_event)
 
