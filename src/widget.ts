@@ -51,3 +51,91 @@ export class ExampleView extends DOMWidgetView {
     this.el.textContent = this.model.get('value');
   }
 }
+
+
+export class Py5SketchPortalModel extends DOMWidgetModel {
+  defaults() {
+    return {
+      ...super.defaults(),
+      _model_name: Py5SketchPortalModel.model_name,
+      _model_module: Py5SketchPortalModel.model_module,
+      _model_module_version: Py5SketchPortalModel.model_module_version,
+      _view_name: Py5SketchPortalModel.view_name,
+      _view_module: Py5SketchPortalModel.view_module,
+      _view_module_version: Py5SketchPortalModel.view_module_version,
+      format: 'jpeg',
+      width: '',
+      height: '',
+      value: new DataView(new ArrayBuffer(0)),
+    };
+  }
+
+  static serializers = {
+    ...DOMWidgetModel.serializers,
+    value: {
+      serialize: (value: any): DataView => {
+        return new DataView(value.buffer.slice(0));
+      },
+    },
+  };
+
+  static model_name = 'Py5SketchPortalModel';
+  static model_module = MODULE_NAME;
+  static model_module_version = MODULE_VERSION;
+  static view_name = 'Py5SketchPortalView';
+  static view_module = MODULE_NAME;
+  static view_module_version = MODULE_VERSION;
+}
+
+export class Py5SketchPortalView extends DOMWidgetView {
+  private _imgEl: HTMLImageElement;
+
+  render() {
+    this._imgEl = document.createElement('img');
+    this._updateImgSrc();
+    this.el.appendChild(this._imgEl);
+
+    this._imgEl.addEventListener('mousemove', {
+      handleEvent: this.onMouseMove.bind(this)
+    });
+    this._imgEl.addEventListener('mousedown', {
+      handleEvent: this.onMouseDown.bind(this)
+    });
+
+    // Python -> JavaScript update
+    this.model.on('change:value', this._updateImgSrc, this);
+  }
+
+  private _updateImgSrc() {
+    console.log('in value changed');
+    const value = this.model.get('value');
+    const blob = new Blob([value], {
+      type: `image/${this.model.get('format')}`,
+    });
+    const url = URL.createObjectURL(blob);
+    this._imgEl.src = url;
+  }
+
+  // https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers
+  private onMouseMove(event: MouseEvent) {
+    this.model.send({ event: 'mouse_move', ...this.getCoordinates(event) }, {});
+  }
+
+  private onMouseDown(event: MouseEvent) {
+    // Bring focus to the img element, so keyboard events can be triggered
+    this._imgEl.focus();
+
+    this.model.send({ event: 'mouse_down', ...this.getCoordinates(event) }, {});
+  }
+
+  protected getCoordinates(event: MouseEvent | Touch) {
+    // https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent
+    const rect = this._imgEl.getBoundingClientRect();
+
+    const x = (this._imgEl.width * (event.clientX - rect.left)) / rect.width;
+    const y = (this._imgEl.height * (event.clientY - rect.top)) / rect.height;
+
+    return { x, y };
+  }
+
+}
