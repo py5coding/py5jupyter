@@ -10,7 +10,7 @@
 TODO: Add module docstring and proper header
 """
 
-from ipywidgets import DOMWidget  # register
+from ipywidgets import DOMWidget
 from traitlets import Unicode, CUnicode, Bytes
 from ._frontend import module_name, module_version
 
@@ -20,19 +20,6 @@ import py5
 MouseEvent = jpype.JClass('processing.event.MouseEvent')
 
 
-class ExampleWidget(DOMWidget):
-    """TODO: Add docstring here
-    """
-    _model_name = Unicode('ExampleModel').tag(sync=True)
-    _model_module = Unicode(module_name).tag(sync=True)
-    _model_module_version = Unicode(module_version).tag(sync=True)
-    _view_name = Unicode('ExampleView').tag(sync=True)
-    _view_module = Unicode(module_name).tag(sync=True)
-    _view_module_version = Unicode(module_version).tag(sync=True)
-
-    value = Unicode('Hello World').tag(sync=True)
-
-# @register
 class Py5SketchPortal(DOMWidget):
     _model_module = Unicode(module_name).tag(sync=True)
     _model_module_version = Unicode(module_version).tag(sync=True)
