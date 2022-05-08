@@ -126,27 +126,27 @@ export class Py5SketchPortalView extends DOMWidgetView {
   }
 
   private onMouseEnter(event: MouseEvent) {
-    this.model.send({ event: 'mouse_enter', buttons: event.buttons, ...this.getCoordinates(event) }, {});
+    this.model.send({ event: 'mouse_enter', buttons: event.buttons, ...this.getModifiers(event), ...this.getCoordinates(event) }, {});
   }
 
   private onMouseDown(event: MouseEvent) {
     // Bring focus to the img element, so keyboard events can be triggered
     this._imgEl.focus();
 
-    this.model.send({ event: 'mouse_down', buttons: event.buttons, ...this.getCoordinates(event) }, {});
+    this.model.send({ event: 'mouse_down', buttons: event.buttons, ...this.getModifiers(event), ...this.getCoordinates(event) }, {});
   }
 
   // https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers
   private onMouseMove(event: MouseEvent) {
-    this.model.send({ event: 'mouse_move', buttons: event.buttons, ...this.getCoordinates(event) }, {});
+    this.model.send({ event: 'mouse_move', buttons: event.buttons, ...this.getModifiers(event), ...this.getCoordinates(event) }, {});
   }
 
   private onMouseUp(event: MouseEvent) {
-    this.model.send({ event: 'mouse_up', buttons: event.buttons, ...this.getCoordinates(event) }, {});
+    this.model.send({ event: 'mouse_up', buttons: event.buttons, ...this.getModifiers(event), ...this.getCoordinates(event) }, {});
   }
 
   private onMouseLeave(event: MouseEvent) {
-    this.model.send({ event: 'mouse_leave', buttons: event.buttons, ...this.getCoordinates(event) }, {});
+    this.model.send({ event: 'mouse_leave', buttons: event.buttons, ...this.getModifiers(event), ...this.getCoordinates(event) }, {});
   }
 
   protected getCoordinates(event: MouseEvent | Touch) {
@@ -157,6 +157,10 @@ export class Py5SketchPortalView extends DOMWidgetView {
     const y = (this._imgEl.height * (event.clientY - rect.top)) / rect.height;
 
     return { x, y };
+  }
+
+  protected getModifiers(event: MouseEvent) {
+    return {mod: (+event.shiftKey) * 1 + (+event.ctrlKey) * 2 + (+event.metaKey) * 4 + (+event.altKey) * 8};
   }
 
 }

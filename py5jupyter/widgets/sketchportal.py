@@ -45,17 +45,21 @@ class Py5SketchPortal(DOMWidget):
         event_type = content.get("event", "")
         event_x = int(content.get("x", 0))
         event_y = int(content.get("y", 0))
-        event_button = bool((b := content.get("buttons", 0)) & 1) * py5.LEFT or bool(b & 4) * py5.CENTER or bool(b & 2) * py5.RIGHT
+        event_mod = content.get("mod", 0)
+        if event_type.startswith('mouse'):
+            event_button = bool((b := content.get("buttons", 0)) & 1) * py5.LEFT or bool(b & 4) * py5.CENTER or bool(b & 2) * py5.RIGHT
+        else:
+            event_button = 0
 
         if event_type == "mouse_enter":
-            self.sketch._instance.fakeMouseEvent(Py5MouseEvent.ENTER, 0, event_x, event_y, event_button, 0)
+            self.sketch._instance.fakeMouseEvent(Py5MouseEvent.ENTER, event_mod, event_x, event_y, event_button, 0)
         elif event_type == "mouse_down":
-            self.sketch._instance.fakeMouseEvent(Py5MouseEvent.PRESS, 0, event_x, event_y, event_button, 1)
+            self.sketch._instance.fakeMouseEvent(Py5MouseEvent.PRESS, event_mod, event_x, event_y, event_button, 1)
         elif event_type == "mouse_move":
-            self.sketch._instance.fakeMouseEvent(Py5MouseEvent.MOVE, 0, event_x, event_y, event_button, 0)
+            self.sketch._instance.fakeMouseEvent(Py5MouseEvent.MOVE, event_mod, event_x, event_y, event_button, 0)
         elif event_type == "mouse_up":
-            self.sketch._instance.fakeMouseEvent(Py5MouseEvent.RELEASE, 0, event_x, event_y, self._last_event_button, 1)
+            self.sketch._instance.fakeMouseEvent(Py5MouseEvent.RELEASE, event_mod, event_x, event_y, self._last_event_button, 1)
         elif event_type == "mouse_leave":
-            self.sketch._instance.fakeMouseEvent(Py5MouseEvent.EXIT, 0, event_x, event_y, event_button, 0)
+            self.sketch._instance.fakeMouseEvent(Py5MouseEvent.EXIT, event_mod, event_x, event_y, event_button, 0)
 
         self._last_event_button = event_button
