@@ -14,11 +14,6 @@ from ipywidgets import DOMWidget
 from traitlets import Unicode, CUnicode, Bytes
 from ._frontend import module_name, module_version
 
-import jpype
-import py5
-
-MouseEvent = jpype.JClass('processing.event.MouseEvent')
-
 
 class Py5SketchPortal(DOMWidget):
     _model_module = Unicode(module_name).tag(sync=True)
@@ -43,7 +38,9 @@ class Py5SketchPortal(DOMWidget):
 
     # # Events
     def _handle_frontend_event(self, _, content, buffers):
+        import py5
+        from py5 import Py5MouseEvent, Py5KeyEvent
+
         if content.get("event", "") == "mouse_move":
-            me = MouseEvent(None, 0, MouseEvent.MOVE, 0, int(content["x"]), int(content["y"]), py5.LEFT, 0)
-            self.sketch._instance.postEvent(me)
+            self.sketch._instance.fakeMouseEvent(0, Py5MouseEvent.MOVE, 0, int(content["x"]), int(content["y"]), py5.LEFT, 0)
         # if content.get("event", "") == "mouse_down":
