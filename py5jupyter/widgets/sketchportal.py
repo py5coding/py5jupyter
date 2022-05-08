@@ -34,6 +34,7 @@ class Py5SketchPortal(DOMWidget):
     def __init__(self, sketch, *args, **kwargs):
         super(Py5SketchPortal, self).__init__(*args, **kwargs)
         self.sketch = sketch
+        self._last_event_button = 0
         self.on_msg(self._handle_frontend_event)
 
     # # Events
@@ -42,16 +43,26 @@ class Py5SketchPortal(DOMWidget):
         from py5 import Py5MouseEvent, Py5KeyEvent
 
         event_type = content.get("event", "")
-        event_x = int(content["x"])
-        event_y = int(content["y"])
+        event_x = int(content.get("x", 0))
+        event_y = int(content.get("y", 0))
+        event_buttons = content.get("buttons", 0)
+        event_button = 0
+        if event_buttons & 1:
+            event_button = py5.LEFT
+        elif event_buttons & 4:
+            event_button = py5.CENTER
+        elif event_buttons & 2:
+            event_button = py5.RIGHT
 
         if event_type == "mouse_enter":
-            self.sketch._instance.fakeMouseEvent(Py5MouseEvent.ENTER, 0, event_x, event_y, py5.LEFT, 0)
+            self.sketch._instance.fakeMouseEvent(Py5MouseEvent.ENTER, 0, event_x, event_y, event_button, 0)
         elif event_type == "mouse_down":
-            self.sketch._instance.fakeMouseEvent(Py5MouseEvent.PRESS, 0, event_x, event_y, py5.LEFT, 1)
+            self.sketch._instance.fakeMouseEvent(Py5MouseEvent.PRESS, 0, event_x, event_y, event_button, 1)
         elif event_type == "mouse_move":
-            self.sketch._instance.fakeMouseEvent(Py5MouseEvent.MOVE, 0, event_x, event_y, py5.LEFT, 0)
+            self.sketch._instance.fakeMouseEvent(Py5MouseEvent.MOVE, 0, event_x, event_y, event_button, 0)
         elif event_type == "mouse_up":
-            self.sketch._instance.fakeMouseEvent(Py5MouseEvent.RELEASE, 0, event_x, event_y, py5.LEFT, 1)
+            self.sketch._instance.fakeMouseEvent(Py5MouseEvent.RELEASE, 0, event_x, event_y, self._last_event_button, 1)
         elif event_type == "mouse_leave":
-            self.sketch._instance.fakeMouseEvent(Py5MouseEvent.EXIT, 0, event_x, event_y, py5.LEFT, 0)
+            self.sketch._instance.fakeMouseEvent(Py5MouseEvent.EXIT, 0, event_x, event_y, event_button, 0)
+
+        self._last_event_button = event_button

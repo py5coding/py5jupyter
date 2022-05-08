@@ -126,27 +126,27 @@ export class Py5SketchPortalView extends DOMWidgetView {
   }
 
   private onMouseEnter(event: MouseEvent) {
-    this.model.send({ event: 'mouse_enter', ...this.getCoordinates(event) }, {});
+    this.model.send({ event: 'mouse_enter', buttons: event.buttons, ...this.getCoordinates(event) }, {});
   }
 
   private onMouseDown(event: MouseEvent) {
     // Bring focus to the img element, so keyboard events can be triggered
     this._imgEl.focus();
 
-    this.model.send({ event: 'mouse_down', ...this.getCoordinates(event) }, {});
+    this.model.send({ event: 'mouse_down', buttons: event.buttons, ...this.getCoordinates(event) }, {});
   }
 
   // https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers
   private onMouseMove(event: MouseEvent) {
-    this.model.send({ event: 'mouse_move', ...this.getCoordinates(event) }, {});
+    this.model.send({ event: 'mouse_move', buttons: event.buttons, ...this.getCoordinates(event) }, {});
   }
 
   private onMouseUp(event: MouseEvent) {
-    this.model.send({ event: 'mouse_up', ...this.getCoordinates(event) }, {});
+    this.model.send({ event: 'mouse_up', buttons: event.buttons, ...this.getCoordinates(event) }, {});
   }
 
   private onMouseLeave(event: MouseEvent) {
-    this.model.send({ event: 'mouse_leave', ...this.getCoordinates(event) }, {});
+    this.model.send({ event: 'mouse_leave', buttons: event.buttons, ...this.getCoordinates(event) }, {});
   }
 
   protected getCoordinates(event: MouseEvent | Touch) {
