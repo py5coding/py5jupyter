@@ -4,8 +4,9 @@
 # Copyright (c) Jim Schmitz.
 # Distributed under the terms of the Modified BSD License.
 
-from .widgets import Py5SketchPortal
+from . import widgets
 from ._version import __version__, version_info
+
 
 def _jupyter_labextension_paths():
     """Called by Jupyter Lab Server to detect if it is a valid labextension and
