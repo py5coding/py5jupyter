@@ -50,8 +50,18 @@ class Py5SketchPortal(DOMWidget):
             event_button = bool((b := content.get("buttons", 0)) & 1) * py5.LEFT or bool(b & 4) * py5.CENTER or bool(b & 2) * py5.RIGHT
         else:
             event_button = 0
+        if event_type.startswith("key"):
+            event_key = content.get("key", "")
+        else:
+            event_key = ""
 
-        if event_type == "mouse_enter":
+        if event_type == "key_down":
+            self.sketch._instance.fakeKeyEvent(Py5KeyEvent.PRESS, event_mod, event_key, ord(event_key))
+        elif event_type == "key_press":
+            self.sketch._instance.fakeKeyEvent(Py5KeyEvent.TYPE, event_mod, event_key, ord(event_key))
+        elif event_type == "key_up":
+            self.sketch._instance.fakeKeyEvent(Py5KeyEvent.RELEASE, event_mod, event_key, ord(event_key))
+        elif event_type == "mouse_enter":
             self.sketch._instance.fakeMouseEvent(Py5MouseEvent.ENTER, event_mod, event_x, event_y, event_button, 0)
         elif event_type == "mouse_down":
             self.sketch._instance.fakeMouseEvent(Py5MouseEvent.PRESS, event_mod, event_x, event_y, event_button, 1)

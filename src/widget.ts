@@ -92,9 +92,19 @@ export class Py5SketchPortalView extends DOMWidgetView {
 
   render() {
     this._imgEl = document.createElement('img');
+    this._imgEl.tabIndex = 0;
     this._updateImgSrc();
     this.el.appendChild(this._imgEl);
 
+    this._imgEl.addEventListener('keydown', {
+      handleEvent: this.onKeyDown.bind(this)
+    });
+    this._imgEl.addEventListener('keypress', {
+      handleEvent: this.onKeyPress.bind(this)
+    });
+    this._imgEl.addEventListener('keyup', {
+      handleEvent: this.onKeyUp.bind(this)
+    });
     this._imgEl.addEventListener('mouseenter', {
       handleEvent: this.onMouseEnter.bind(this)
     });
@@ -116,13 +126,26 @@ export class Py5SketchPortalView extends DOMWidgetView {
   }
 
   private _updateImgSrc() {
-    console.log('in value changed');
     const value = this.model.get('value');
     const blob = new Blob([value], {
       type: `image/${this.model.get('format')}`,
     });
     const url = URL.createObjectURL(blob);
     this._imgEl.src = url;
+  }
+
+  // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent
+
+  private onKeyDown(event: KeyboardEvent) {
+    this.model.send({ event: 'key_down', key: event.key, ...this.getModifiers(event) }, {});
+  }
+
+  private onKeyPress(event: KeyboardEvent) {
+    this.model.send({ event: 'key_press', key: event.key, ...this.getModifiers(event) }, {});
+  }
+
+  private onKeyUp(event: KeyboardEvent) {
+    this.model.send({ event: 'key_up', key: event.key, ...this.getModifiers(event) }, {});
   }
 
   private onMouseEnter(event: MouseEvent) {
@@ -159,7 +182,7 @@ export class Py5SketchPortalView extends DOMWidgetView {
     return { x, y };
   }
 
-  protected getModifiers(event: MouseEvent) {
+  protected getModifiers(event: MouseEvent | KeyboardEvent) {
     return {mod: (+event.shiftKey) * 1 + (+event.ctrlKey) * 2 + (+event.metaKey) * 4 + (+event.altKey) * 8};
   }
 
