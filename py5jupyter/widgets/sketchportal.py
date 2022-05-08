@@ -45,14 +45,7 @@ class Py5SketchPortal(DOMWidget):
         event_type = content.get("event", "")
         event_x = int(content.get("x", 0))
         event_y = int(content.get("y", 0))
-        event_buttons = content.get("buttons", 0)
-        event_button = 0
-        if event_buttons & 1:
-            event_button = py5.LEFT
-        elif event_buttons & 4:
-            event_button = py5.CENTER
-        elif event_buttons & 2:
-            event_button = py5.RIGHT
+        event_button = bool((b := content.get("buttons", 0)) & 1) * py5.LEFT or bool(b & 4) * py5.CENTER or bool(b & 2) * py5.RIGHT
 
         if event_type == "mouse_enter":
             self.sketch._instance.fakeMouseEvent(Py5MouseEvent.ENTER, 0, event_x, event_y, event_button, 0)
