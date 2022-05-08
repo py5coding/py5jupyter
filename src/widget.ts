@@ -95,11 +95,20 @@ export class Py5SketchPortalView extends DOMWidgetView {
     this._updateImgSrc();
     this.el.appendChild(this._imgEl);
 
-    this._imgEl.addEventListener('mousemove', {
-      handleEvent: this.onMouseMove.bind(this)
+    this._imgEl.addEventListener('mouseenter', {
+      handleEvent: this.onMouseEnter.bind(this)
     });
     this._imgEl.addEventListener('mousedown', {
       handleEvent: this.onMouseDown.bind(this)
+    });
+    this._imgEl.addEventListener('mousemove', {
+      handleEvent: this.onMouseMove.bind(this)
+    });
+    this._imgEl.addEventListener('mouseup', {
+      handleEvent: this.onMouseUp.bind(this)
+    });
+    this._imgEl.addEventListener('mouseleave', {
+      handleEvent: this.onMouseLeave.bind(this)
     });
 
     // Python -> JavaScript update
@@ -116,9 +125,8 @@ export class Py5SketchPortalView extends DOMWidgetView {
     this._imgEl.src = url;
   }
 
-  // https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers
-  private onMouseMove(event: MouseEvent) {
-    this.model.send({ event: 'mouse_move', ...this.getCoordinates(event) }, {});
+  private onMouseEnter(event: MouseEvent) {
+    this.model.send({ event: 'mouse_enter', ...this.getCoordinates(event) }, {});
   }
 
   private onMouseDown(event: MouseEvent) {
@@ -126,6 +134,19 @@ export class Py5SketchPortalView extends DOMWidgetView {
     this._imgEl.focus();
 
     this.model.send({ event: 'mouse_down', ...this.getCoordinates(event) }, {});
+  }
+
+  // https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers
+  private onMouseMove(event: MouseEvent) {
+    this.model.send({ event: 'mouse_move', ...this.getCoordinates(event) }, {});
+  }
+
+  private onMouseUp(event: MouseEvent) {
+    this.model.send({ event: 'mouse_up', ...this.getCoordinates(event) }, {});
+  }
+
+  private onMouseLeave(event: MouseEvent) {
+    this.model.send({ event: 'mouse_leave', ...this.getCoordinates(event) }, {});
   }
 
   protected getCoordinates(event: MouseEvent | Touch) {

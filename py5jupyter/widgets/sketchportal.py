@@ -41,6 +41,15 @@ class Py5SketchPortal(DOMWidget):
         import py5
         from py5 import Py5MouseEvent, Py5KeyEvent
 
-        if content.get("event", "") == "mouse_move":
+        event_type = content.get("event", "")
+
+        if event_type == "mouse_enter":
+            self.sketch._instance.fakeMouseEvent(0, Py5MouseEvent.ENTER, 0, int(content["x"]), int(content["y"]), py5.LEFT, 0)
+        elif event_type == "mouse_down":
+            self.sketch._instance.fakeMouseEvent(0, Py5MouseEvent.PRESS, 0, int(content["x"]), int(content["y"]), py5.LEFT, 0)
+        elif event_type == "mouse_move":
             self.sketch._instance.fakeMouseEvent(0, Py5MouseEvent.MOVE, 0, int(content["x"]), int(content["y"]), py5.LEFT, 0)
-        # if content.get("event", "") == "mouse_down":
+        elif event_type == "mouse_up":
+            self.sketch._instance.fakeMouseEvent(0, Py5MouseEvent.RELEASE, 0, int(content["x"]), int(content["y"]), py5.LEFT, 0)
+        elif event_type == "mouse_leave":
+            self.sketch._instance.fakeMouseEvent(0, Py5MouseEvent.EXIT, 0, int(content["x"]), int(content["y"]), py5.LEFT, 0)
