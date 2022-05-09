@@ -1,11 +1,24 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# Copyright (c) Jim Schmitz.
-# Distributed under the terms of the Modified BSD License.
-
-from . import widgets
-from ._version import __version__, version_info
+# *****************************************************************************
+#
+#   Part of the py5jupyter (& py5) library
+#   Copyright (C) 2022 Jim Schmitz
+#
+#   This library is free software: you can redistribute it and/or modify it
+#   under the terms of the GNU Lesser General Public License as published by
+#   the Free Software Foundation, either version 2.1 of the License, or (at
+#   your option) any later version.
+#
+#   This library is distributed in the hope that it will be useful, but
+#   WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser
+#   General Public License for more details.
+#
+#   You should have received a copy of the GNU Lesser General Public License
+#   along with this library. If not, see <https://www.gnu.org/licenses/>.
+#
+# *****************************************************************************
+from . import widgets  # noqa
+from ._version import __version__, version_info  # noqa
 
 
 def _jupyter_labextension_paths():
