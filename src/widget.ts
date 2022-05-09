@@ -137,15 +137,15 @@ export class Py5SketchPortalView extends DOMWidgetView {
   // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent
 
   private onKeyDown(event: KeyboardEvent) {
-    this.model.send({ event: 'key_down', key: event.key, ...this.getModifiers(event) }, {});
+    this.model.send({ event: 'key_down', key: event.key, repeat: event.repeat, ...this.getModifiers(event) }, {});
   }
 
   private onKeyPress(event: KeyboardEvent) {
-    this.model.send({ event: 'key_press', key: event.key, ...this.getModifiers(event) }, {});
+    this.model.send({ event: 'key_press', key: event.key, repeat: event.repeat, ...this.getModifiers(event) }, {});
   }
 
   private onKeyUp(event: KeyboardEvent) {
-    this.model.send({ event: 'key_up', key: event.key, ...this.getModifiers(event) }, {});
+    this.model.send({ event: 'key_up', key: event.key, repeat: event.repeat, ...this.getModifiers(event) }, {});
   }
 
   private onMouseEnter(event: MouseEvent) {
