@@ -79,7 +79,6 @@ export class Py5SketchPortalModel extends DOMWidgetModel {
       _view_name: Py5SketchPortalModel.view_name,
       _view_module: Py5SketchPortalModel.view_module,
       _view_module_version: Py5SketchPortalModel.view_module_version,
-      format: 'jpeg',
       width: '',
       height: '',
       value: new DataView(new ArrayBuffer(0)),
@@ -104,36 +103,53 @@ export class Py5SketchPortalModel extends DOMWidgetModel {
 }
 
 export class Py5SketchPortalView extends DOMWidgetView {
-  private _imgEl: HTMLImageElement;
+  private _img: HTMLImageElement;
+  private _canvas: HTMLCanvasElement;
+  private _ctx: CanvasRenderingContext2D;
 
   render() {
-    this._imgEl = document.createElement('img');
-    this._imgEl.tabIndex = 0;
-    this._updateImgSrc();
-    this.el.appendChild(this._imgEl);
+    this._img = document.createElement('img');
+    this._img.width = this.model.get('width');
+    this._img.height = this.model.get('height');
 
-    this._imgEl.addEventListener('keydown', {
+    this._canvas = document.createElement('canvas');
+    this._canvas.width = this.model.get('width');
+    this._canvas.height = this.model.get('height');
+    this._canvas.tabIndex = 0;
+
+    const ctx = this._canvas.getContext('2d');
+    if (ctx === null) {
+      throw 'Could not create 2d context.';
+    } else {
+      this._ctx = ctx;
+    }
+
+    this._updateImgSrc();
+    this._ctx.drawImage(this._img, 0, 0);
+    this.el.appendChild(this._canvas);
+
+    this._canvas.addEventListener('keydown', {
       handleEvent: this.onKeyDown.bind(this)
     });
-    this._imgEl.addEventListener('keypress', {
+    this._canvas.addEventListener('keypress', {
       handleEvent: this.onKeyPress.bind(this)
     });
-    this._imgEl.addEventListener('keyup', {
+    this._canvas.addEventListener('keyup', {
       handleEvent: this.onKeyUp.bind(this)
     });
-    this._imgEl.addEventListener('mouseenter', {
+    this._canvas.addEventListener('mouseenter', {
       handleEvent: this.onMouseEnter.bind(this)
     });
-    this._imgEl.addEventListener('mousedown', {
+    this._canvas.addEventListener('mousedown', {
       handleEvent: this.onMouseDown.bind(this)
     });
-    this._imgEl.addEventListener('mousemove', {
+    this._canvas.addEventListener('mousemove', {
       handleEvent: this.onMouseMove.bind(this)
     });
-    this._imgEl.addEventListener('mouseup', {
+    this._canvas.addEventListener('mouseup', {
       handleEvent: this.onMouseUp.bind(this)
     });
-    this._imgEl.addEventListener('mouseleave', {
+    this._canvas.addEventListener('mouseleave', {
       handleEvent: this.onMouseLeave.bind(this)
     });
 
@@ -147,7 +163,8 @@ export class Py5SketchPortalView extends DOMWidgetView {
       type: `image/${this.model.get('format')}`,
     });
     const url = URL.createObjectURL(blob);
-    this._imgEl.src = url;
+    this._img.src = url;
+    this._ctx.drawImage(this._img, 0, 0);
   }
 
   // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent
@@ -170,7 +187,7 @@ export class Py5SketchPortalView extends DOMWidgetView {
 
   private onMouseDown(event: MouseEvent) {
     // Bring focus to the img element, so keyboard events can be triggered
-    this._imgEl.focus();
+    this._canvas.focus();
 
     this.model.send({ event: 'mouse_down', buttons: event.buttons, ...this.getModifiers(event), ...this.getCoordinates(event) }, {});
   }
@@ -190,10 +207,10 @@ export class Py5SketchPortalView extends DOMWidgetView {
 
   protected getCoordinates(event: MouseEvent | Touch) {
     // https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent
-    const rect = this._imgEl.getBoundingClientRect();
+    const rect = this._canvas.getBoundingClientRect();
 
-    const x = (this._imgEl.width * (event.clientX - rect.left)) / rect.width;
-    const y = (this._imgEl.height * (event.clientY - rect.top)) / rect.height;
+    const x = (this._canvas.width * (event.clientX - rect.left)) / rect.width;
+    const y = (this._canvas.height * (event.clientY - rect.top)) / rect.height;
 
     return { x, y };
   }
