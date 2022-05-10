@@ -17,6 +17,8 @@
 #   along with this library. If not, see <https://www.gnu.org/licenses/>.
 #
 # *****************************************************************************
+import time
+
 from ipywidgets import DOMWidget
 from traitlets import Unicode, CUnicode, Bytes
 from ._frontend import module_name, module_version
@@ -44,6 +46,8 @@ class Py5SketchPortal(DOMWidget):
 
         self._sketch = sketch
         self._last_event_button = 0
+        self._click_count = 0
+        self._last_click_time = 0
         self.on_msg(self._handle_frontend_event)
 
     # # Events
@@ -62,13 +66,16 @@ class Py5SketchPortal(DOMWidget):
             if event_type == "mouse_enter":
                 self._sketch._instance.fakeMouseEvent(Py5MouseEvent.ENTER, event_mod, event_x, event_y, event_button, 0)
             elif event_type == "mouse_down":
-                self._sketch._instance.fakeMouseEvent(Py5MouseEvent.PRESS, event_mod, event_x, event_y, event_button, 1)
+                self._note_mouse_down(event_button)
+                self._sketch._instance.fakeMouseEvent(Py5MouseEvent.PRESS, event_mod, event_x, event_y, event_button, self._click_count)
             elif event_type == "mouse_move":
                 self._sketch._instance.fakeMouseEvent(Py5MouseEvent.MOVE, event_mod, event_x, event_y, event_button, 0)
             elif event_type == "mouse_up":
-                self._sketch._instance.fakeMouseEvent(Py5MouseEvent.RELEASE, event_mod, event_x, event_y, self._last_event_button, 1)
+                self._sketch._instance.fakeMouseEvent(Py5MouseEvent.RELEASE, event_mod, event_x, event_y, self._last_event_button, self._click_count)
             elif event_type == "mouse_leave":
                 self._sketch._instance.fakeMouseEvent(Py5MouseEvent.EXIT, event_mod, event_x, event_y, event_button, 0)
+            elif event_type == "mouse_click":
+                self._sketch._instance.fakeMouseEvent(Py5MouseEvent.CLICK, event_mod, event_x, event_y, self._last_event_button, self._click_count)
 
         elif event_type.startswith("key"):
             event_key = content.get("key", "")
@@ -81,4 +88,11 @@ class Py5SketchPortal(DOMWidget):
             elif event_type == "key_up":
                 self._sketch._instance.fakeKeyEvent(Py5KeyEvent.RELEASE, event_mod, event_key, event_repeat)
 
+    def _note_mouse_down(self, event_button):
+        t = time.time()
+        if t < self._last_click_time + 0.5:
+            self._click_count += 1
+        else:
+            self._click_count = 1
+        self._last_click_time = t
         self._last_event_button = event_button

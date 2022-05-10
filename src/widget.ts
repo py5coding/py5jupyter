@@ -111,6 +111,9 @@ export class Py5SketchPortalView extends DOMWidgetView {
     this._canvas.addEventListener('mouseleave', {
       handleEvent: this.onMouseLeave.bind(this)
     });
+    this._canvas.addEventListener('click', {
+      handleEvent: this.onMouseClick.bind(this)
+    });
 
     // Python -> JavaScript update
     this.model.on('change:value', this._updateImgSrc, this);
@@ -162,6 +165,10 @@ export class Py5SketchPortalView extends DOMWidgetView {
 
   private onMouseLeave(event: MouseEvent) {
     this.model.send({ event: 'mouse_leave', buttons: event.buttons, ...this.getModifiers(event), ...this.getCoordinates(event) }, {});
+  }
+
+  private onMouseClick(event: MouseEvent) {
+    this.model.send({ event: 'mouse_click', buttons: event.buttons, ...this.getModifiers(event), ...this.getCoordinates(event) }, {});
   }
 
   protected getCoordinates(event: MouseEvent | Touch) {
