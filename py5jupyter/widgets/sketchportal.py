@@ -19,6 +19,8 @@
 # *****************************************************************************
 import time
 
+import numpy as np
+
 from ipywidgets import DOMWidget
 from traitlets import Unicode, CUnicode, Bytes
 from ._frontend import module_name, module_version
@@ -79,6 +81,9 @@ class Py5SketchPortal(DOMWidget):
                 self._sketch._instance.fakeMouseEvent(Py5MouseEvent.EXIT, event_mod, event_x, event_y, event_button, 0)
             elif event_type == "mouse_click":
                 self._sketch._instance.fakeMouseEvent(Py5MouseEvent.CLICK, event_mod, event_x, event_y, self._last_event_button, self._click_count)
+            elif event_type == "mouse_wheel":
+                event_wheel = np.sign(content.get("wheel", 0))
+                self._sketch._instance.fakeMouseEvent(Py5MouseEvent.WHEEL, event_mod, event_x, event_y, event_button, event_wheel)
 
         elif event_type.startswith("key"):
             event_key = content.get("key", "")

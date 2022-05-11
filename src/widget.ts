@@ -28,6 +28,8 @@ import { MODULE_NAME, MODULE_VERSION } from './version';
 import '../css/widget.css';
 
 
+// https://ipywidgets.readthedocs.io/en/latest/examples/Widget%20Low%20Level.html
+
 export class Py5SketchPortalModel extends DOMWidgetModel {
   defaults() {
     return {
@@ -114,6 +116,9 @@ export class Py5SketchPortalView extends DOMWidgetView {
     this._canvas.addEventListener('click', {
       handleEvent: this.onMouseClick.bind(this)
     });
+    this._canvas.addEventListener('wheel', {
+      handleEvent: this.onMouseWheel.bind(this)
+    });
 
     // Python -> JavaScript update
     this.model.on('change:value', this._updateImgSrc, this);
@@ -169,6 +174,10 @@ export class Py5SketchPortalView extends DOMWidgetView {
 
   private onMouseClick(event: MouseEvent) {
     this.model.send({ event: 'mouse_click', buttons: event.buttons, ...this.getModifiers(event), ...this.getCoordinates(event) }, {});
+  }
+
+  private onMouseWheel(event: WheelEvent) {
+    this.model.send({ event: 'mouse_wheel', buttons: event.buttons, wheel: ((event.deltaY != 0) ? event.deltaY : event.deltaX), ...this.getModifiers(event), ...this.getCoordinates(event) }, {});
   }
 
   protected getCoordinates(event: MouseEvent | Touch) {
