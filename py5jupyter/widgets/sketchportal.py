@@ -69,7 +69,10 @@ class Py5SketchPortal(DOMWidget):
                 self._note_mouse_down(event_button)
                 self._sketch._instance.fakeMouseEvent(Py5MouseEvent.PRESS, event_mod, event_x, event_y, event_button, self._click_count)
             elif event_type == "mouse_move":
-                self._sketch._instance.fakeMouseEvent(Py5MouseEvent.MOVE, event_mod, event_x, event_y, event_button, 0)
+                if event_button:
+                    self._sketch._instance.fakeMouseEvent(Py5MouseEvent.DRAG, event_mod, event_x, event_y, event_button, 0)
+                else:
+                    self._sketch._instance.fakeMouseEvent(Py5MouseEvent.MOVE, event_mod, event_x, event_y, event_button, 0)
             elif event_type == "mouse_up":
                 self._sketch._instance.fakeMouseEvent(Py5MouseEvent.RELEASE, event_mod, event_x, event_y, self._last_event_button, self._click_count)
             elif event_type == "mouse_leave":
