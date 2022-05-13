@@ -36,6 +36,7 @@ class Py5SketchPortal(DOMWidget):
 
     # Define the custom state properties to sync with the front-end
     value = Bytes(help="The frame image as bytes.").tag(sync=True)
+    random_number = CUnicode(help="random number to force change event").tag(sync=True)
     width = CUnicode(help="Width of the image in pixels. Use layout.width "
                           "for styling the widget.").tag(sync=True)
     height = CUnicode(help="Height of the image in pixels. Use layout.height "

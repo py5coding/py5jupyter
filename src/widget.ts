@@ -43,6 +43,7 @@ export class Py5SketchPortalModel extends DOMWidgetModel {
       width: '',
       height: '',
       value: new DataView(new ArrayBuffer(0)),
+      random_number: '',
     };
   }
 
@@ -90,38 +91,43 @@ export class Py5SketchPortalView extends DOMWidgetView {
     this.el.appendChild(this._canvas);
 
     this._canvas.addEventListener('keydown', {
-      handleEvent: this.onKeyDown.bind(this)
+      handleEvent: this.onKeyEvent.bind(this, 'key_down')
     });
     this._canvas.addEventListener('keypress', {
-      handleEvent: this.onKeyPress.bind(this)
+      handleEvent: this.onKeyEvent.bind(this, 'key_press')
     });
     this._canvas.addEventListener('keyup', {
-      handleEvent: this.onKeyUp.bind(this)
+      handleEvent: this.onKeyEvent.bind(this, 'key_up')
     });
     this._canvas.addEventListener('mouseenter', {
       handleEvent: this.onMouseEnter.bind(this)
+      // handleEvent: this.onMouseEvent.bind(this, 'mouse_enter')
     });
     this._canvas.addEventListener('mousedown', {
       handleEvent: this.onMouseDown.bind(this)
     });
     this._canvas.addEventListener('mousemove', {
       handleEvent: this.onMouseMove.bind(this)
+      // handleEvent: this.onMouseEvent.bind(this, 'mouse_move')
     });
     this._canvas.addEventListener('mouseup', {
       handleEvent: this.onMouseUp.bind(this)
+      // handleEvent: this.onMouseEvent.bind(this, 'mouse_up')
     });
     this._canvas.addEventListener('mouseleave', {
       handleEvent: this.onMouseLeave.bind(this)
+      // handleEvent: this.onMouseEvent.bind(this, 'mouse_leave')
     });
     this._canvas.addEventListener('click', {
       handleEvent: this.onMouseClick.bind(this)
+      // handleEvent: this.onMouseEvent.bind(this, 'mouse_click')
     });
     this._canvas.addEventListener('wheel', {
       handleEvent: this.onMouseWheel.bind(this)
     });
 
     // Python -> JavaScript update
-    this.model.on('change:value', this._updateImgSrc, this);
+    this.model.on('change:random_number', this._updateImgSrc, this);
   }
 
   private _updateImgSrc() {
@@ -136,17 +142,13 @@ export class Py5SketchPortalView extends DOMWidgetView {
 
   // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent
 
-  private onKeyDown(event: KeyboardEvent) {
-    this.model.send({ event: 'key_down', key: event.key, repeat: event.repeat, ...this.getModifiers(event) }, {});
+  private onKeyEvent(event_name: string, event: KeyboardEvent) {
+    this.model.send({ event: event_name, key: event.key, repeat: event.repeat, ...this.getModifiers(event) }, {});
   }
 
-  private onKeyPress(event: KeyboardEvent) {
-    this.model.send({ event: 'key_press', key: event.key, repeat: event.repeat, ...this.getModifiers(event) }, {});
-  }
-
-  private onKeyUp(event: KeyboardEvent) {
-    this.model.send({ event: 'key_up', key: event.key, repeat: event.repeat, ...this.getModifiers(event) }, {});
-  }
+  // private onMouseEvent(event_name: string, event: MouseEvent) {
+  //   this.model.send({ event: event_name, buttons: event.buttons, ...this.getModifiers(event), ...this.getCoordinates(event) }, {});
+  // }
 
   private onMouseEnter(event: MouseEvent) {
     this.model.send({ event: 'mouse_enter', buttons: event.buttons, ...this.getModifiers(event), ...this.getCoordinates(event) }, {});
@@ -160,6 +162,7 @@ export class Py5SketchPortalView extends DOMWidgetView {
   }
 
   // https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers
+
   private onMouseMove(event: MouseEvent) {
     this.model.send({ event: 'mouse_move', buttons: event.buttons, ...this.getModifiers(event), ...this.getCoordinates(event) }, {});
   }
@@ -191,7 +194,7 @@ export class Py5SketchPortalView extends DOMWidgetView {
   }
 
   protected getModifiers(event: MouseEvent | KeyboardEvent) {
-    return {mod: (+event.shiftKey) * 1 + (+event.ctrlKey) * 2 + (+event.metaKey) * 4 + (+event.altKey) * 8};
+    return { mod: (+event.shiftKey) * 1 + (+event.ctrlKey) * 2 + (+event.metaKey) * 4 + (+event.altKey) * 8 };
   }
 
 }
