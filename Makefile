@@ -1,3 +1,6 @@
+init:
+	npm install
+
 build_ts:
 	npm run build
 
