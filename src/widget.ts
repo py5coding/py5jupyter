@@ -24,6 +24,10 @@ import {
 
 import { MODULE_NAME, MODULE_VERSION } from './version';
 
+import {
+  bufferToImage
+} from './utils';
+
 // Import the CSS
 import '../css/widget.css';
 
@@ -65,15 +69,10 @@ export class Py5SketchPortalModel extends DOMWidgetModel {
 }
 
 export class Py5SketchPortalView extends DOMWidgetView {
-  private _img: HTMLImageElement;
   private _canvas: HTMLCanvasElement;
   private _ctx: CanvasRenderingContext2D;
 
   render() {
-    this._img = document.createElement('img');
-    this._img.width = this.model.get('width');
-    this._img.height = this.model.get('height');
-
     this._canvas = document.createElement('canvas');
     this._canvas.width = this.model.get('width');
     this._canvas.height = this.model.get('height');
@@ -87,7 +86,6 @@ export class Py5SketchPortalView extends DOMWidgetView {
     }
 
     this._updateImgSrc();
-    this._ctx.drawImage(this._img, 0, 0);
     this.el.appendChild(this._canvas);
 
     this._canvas.addEventListener('keydown', {
@@ -125,14 +123,9 @@ export class Py5SketchPortalView extends DOMWidgetView {
     this.model.on('change:random_number', this._updateImgSrc, this);
   }
 
-  private _updateImgSrc() {
-    const value = this.model.get('value');
-    const blob = new Blob([value], {
-      type: `image/${this.model.get('format')}`,
-    });
-    const url = URL.createObjectURL(blob);
-    this._img.src = url;
-    this._ctx.drawImage(this._img, 0, 0);
+  private async _updateImgSrc() {
+    const img = await bufferToImage(this.model.get('value'));
+    this._ctx.drawImage(img, 0, 0);
   }
 
   // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent
