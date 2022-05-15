@@ -47,7 +47,6 @@ export class Py5SketchPortalModel extends DOMWidgetModel {
       width: '',
       height: '',
       value: new DataView(new ArrayBuffer(0)),
-      random_number: '',
     };
   }
 
@@ -120,7 +119,7 @@ export class Py5SketchPortalView extends DOMWidgetView {
     });
 
     // Python -> JavaScript update
-    this.model.on('change:random_number', this._updateImgSrc, this);
+    this.model.on('change:value', this._updateImgSrc, this);
   }
 
   private async _updateImgSrc() {
