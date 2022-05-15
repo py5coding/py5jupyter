@@ -28,10 +28,6 @@ import {
   bufferToImage
 } from './utils';
 
-// Import the CSS
-import '../css/widget.css';
-
-
 // https://ipywidgets.readthedocs.io/en/latest/examples/Widget%20Low%20Level.html
 
 export class Py5SketchPortalModel extends DOMWidgetModel {
