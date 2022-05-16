@@ -27,6 +27,7 @@ $(py5jupyter_installed): $(py5jupyter_py_build) $(py5jupyter_ts_lib)
 
 distributions: $(py5jupyter_sdist)
 $(py5jupyter_sdist): $(py5jupyter_installed)
+	rm -Rf $(py5jupyter_sdist)
 	python setup.py sdist -d $(py5jupyter_sdist) && python setup.py bdist_wheel -d $(py5jupyter_sdist)
 	touch $(py5jupyter_sdist)
 
