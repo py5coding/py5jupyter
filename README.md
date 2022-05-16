@@ -1,6 +1,6 @@
 # py5
 
-![py5 logo](images/logo.png)
+![py5 logo](https://py5.ixora.io/_static/logo.png)
 
 [![py5 downloads](https://pepy.tech/badge/py5/month)](https://pepy.tech/project/py5)
 
