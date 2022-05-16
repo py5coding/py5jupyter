@@ -87,9 +87,9 @@ setup_args = dict(
     author_email='jim@ixora.io',
     download_url='https://pypi.org/project/py5jupyter',
     project_urls={
-        "Bug Tracker": 'https://github.com/hx2A/py5jupyter/issues',
+        "Bug Tracker": 'https://github.com/py5coding/py5jupyter/issues',
         "Documentation": 'https://py5.ixora.io/',
-        "Source Code": 'https://github.com/hx2A/py5jupyter',
+        "Source Code": 'https://github.com/py5coding/py5jupyter',
     },
     platforms="Linux, Mac OS X, Windows",
     keywords=['Jupyter', 'Widgets', 'IPython', 'Processing'],
