@@ -10,7 +10,7 @@ py5 is a new version of [**Processing**][processing] for Python 3.8+. It makes t
 
 The goal of py5 is to create a new version of Processing that is integrated into the Python ecosystem. Built into the library are thoughtful choices about how to best get py5 to work with other popular Python libraries such as [numpy](https://www.numpy.org/) or [Pillow](https://python-pillow.org/).
 
-The py5jupyter library provides Jupyter-related functionality for py5. This contains the source code for the Jupyter kernels and Jupyter widgets.
+The py5jupyter library provides Jupyter-related functionality for py5. This includes the Jupyter kernels and Jupyter widgets.
 
 For more in-depth information about py5, see the [py5generator][py5_generator_repo] github repo.
 
