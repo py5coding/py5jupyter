@@ -17,5 +17,5 @@
 #   along with this library. If not, see <https://www.gnu.org/licenses/>.
 #
 # *****************************************************************************
-version_info = (0, 1, 0, 'dev')
+version_info = (0, 1, 0, 'a0')
 __version__ = ".".join(map(str, version_info))

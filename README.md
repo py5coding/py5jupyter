@@ -1,72 +1,48 @@
+# py5
 
-# py5jupyter
+![py5 logo](images/logo.png)
 
-[![Build Status](https://travis-ci.org//py5jupyter.svg?branch=master)](https://travis-ci.org//py5jupyter)
-[![codecov](https://codecov.io/gh//py5jupyter/branch/master/graph/badge.svg)](https://codecov.io/gh//py5jupyter)
+[![py5 downloads](https://pepy.tech/badge/py5/month)](https://pepy.tech/project/py5)
 
+[![Downloads](https://pepy.tech/badge/py5/week)](https://pepy.tech/project/py5)
 
-py5 Jupyter tools
+py5 is a new version of [**Processing**][processing] for Python 3.8+. It makes the Java [**Processing**][processing] jars available to the CPython interpreter using [**JPype**][jpype]. It can do just about everything [**Processing**][processing] can do, except with Python instead of Java code.
+
+The goal of py5 is to create a new version of Processing that is integrated into the Python ecosystem. Built into the library are thoughtful choices about how to best get py5 to work with other popular Python libraries such as [numpy](https://www.numpy.org/) or [Pillow](https://python-pillow.org/).
+
+## py5jupyter
+
+[![py5 downloads](https://pepy.tech/badge/py5jupyter/month)](https://pepy.tech/project/py5jupyter)
+
+[![Downloads](https://pepy.tech/badge/py5jupyter/week)](https://pepy.tech/project/py5jupyter)
+
+The py5jupyter library provides Jupyter-related functionality for py5. This contains the source code for the Jupyter kernels and Jupyter widgets.
+
+For more in-depth information about py5, see the [py5generator][py5_generator_repo] github repo.
 
 ## Installation
 
 You can install using `pip`:
 
 ```bash
-pip install py5jupyter
+pip install py5 py5jupyter
 ```
 
 If you are using Jupyter Notebook 5.2 or earlier, you may also need to enable
 the nbextension:
+
 ```bash
 jupyter nbextension enable --py [--sys-prefix|--user|--system] py5jupyter
 ```
 
-## Development Installation
+## Get In Touch
 
-Create a dev environment:
-```bash
-conda create -n py5jupyter-dev -c conda-forge nodejs yarn python jupyterlab
-conda activate py5jupyter-dev
-```
+Have a comment or question? We'd love to hear from you! The best ways to reach out are:
 
-Install the python. This will also build the TS package.
-```bash
-pip install -e ".[test, examples]"
-```
+* github [discussions](https://github.com/hx2A/py5generator/discussions) and [issues](https://github.com/hx2A/py5generator/issues)
+* twitter [@py5coding](https://twitter.com/py5coding)
+* [processing foundation discourse](https://discourse.processing.org/)
 
-When developing your extensions, you need to manually enable your extensions with the
-notebook / lab frontend. For lab, this is done by the command:
-
-```
-jupyter labextension develop --overwrite .
-yarn run build
-```
-
-For classic notebook, you need to run:
-
-```
-jupyter nbextension install --sys-prefix --symlink --overwrite --py py5jupyter
-jupyter nbextension enable --sys-prefix --py py5jupyter
-```
-
-Note that the `--symlink` flag doesn't work on Windows, so you will here have to run
-the `install` command every time that you rebuild your extension. For certain installations
-you might also need another flag instead of `--sys-prefix`, but we won't cover the meaning
-of those flags here.
-
-### How to see your changes
-#### Typescript:
-If you use JupyterLab to develop then you can watch the source directory and run JupyterLab at the same time in different
-terminals to watch for changes in the extension's source and automatically rebuild the widget.
-
-```bash
-# Watch the source directory in one terminal, automatically rebuilding when needed
-yarn run watch
-# Run JupyterLab in another terminal
-jupyter lab
-```
-
-After a change wait for the build to finish and then refresh your browser and the changes should take effect.
-
-#### Python:
-If you make a change to the python code then you will need to restart the notebook kernel to have it take effect.
+[py5_generator_repo]: https://github.com/hx2A/py5generator
+[processing]: https://github.com/processing/processing4
+[jpype]: https://github.com/jpype-project/jpype
