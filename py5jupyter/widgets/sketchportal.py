@@ -62,6 +62,7 @@ class Py5SketchPortal(DOMWidget):
         event_x = int(content.get("x", 0))
         event_y = int(content.get("y", 0))
         event_mod = content.get("mod", 0)
+        is_gl = self._sketch.get_graphics()._instance.isGL()
 
         if event_type.startswith('mouse'):
             event_button = bool((b := content.get("buttons", 0)) & 1) * py5.LEFT or bool(b & 4) * py5.CENTER or bool(b & 2) * py5.RIGHT
@@ -73,7 +74,7 @@ class Py5SketchPortal(DOMWidget):
                 self._sketch._instance.fakeMouseEvent(Py5MouseEvent.PRESS, event_mod, event_x, event_y, event_button, self._click_count)
             elif event_type == "mouse_move":
                 if event_button:
-                    self._sketch._instance.fakeMouseEvent(Py5MouseEvent.DRAG, event_mod, event_x, event_y, event_button, 1 if self._sketch.get_graphics()._instance.isGL() else 0)
+                    self._sketch._instance.fakeMouseEvent(Py5MouseEvent.DRAG, event_mod, event_x, event_y, event_button, 1 if is_gl else 0)
                 else:
                     self._sketch._instance.fakeMouseEvent(Py5MouseEvent.MOVE, event_mod, event_x, event_y, event_button, 0)
             elif event_type == "mouse_up":
