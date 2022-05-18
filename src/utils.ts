@@ -17,6 +17,10 @@
 //   along with this library. If not, see <https://www.gnu.org/licenses/>.
 //
 // *****************************************************************************
+
+// The below function came from the wonderful Python library ipycanvas
+// https://github.com/martinRenou/ipycanvas
+
 export async function bufferToImage(buffer: any): Promise<HTMLImageElement> {
     let url: string;
 
