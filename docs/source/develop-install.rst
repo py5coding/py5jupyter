@@ -6,7 +6,7 @@ Developer install
 To install a developer version of py5jupyter, you will first need to clone
 the repository::
 
-    git clone https://github.com//py5jupyter
+    git clone https://github.com/py5coding/py5jupyter
     cd py5jupyter
 
 Next, install it with a develop install using pip::

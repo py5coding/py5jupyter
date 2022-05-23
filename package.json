@@ -13,9 +13,9 @@
     "dist/*.js",
     "css/*.css"
   ],
-  "homepage": "https://github.com//py5jupyter",
+  "homepage": "https://github.com/py5coding/py5jupyter",
   "bugs": {
-    "url": "https://github.com//py5jupyter/issues"
+    "url": "https://github.com/py5coding/py5jupyter/issues"
   },
   "license": "BSD-3-Clause",
   "author": {
@@ -26,7 +26,7 @@
   "types": "./lib/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com//py5jupyter"
+    "url": "https://github.com/py5coding/py5jupyter"
   },
   "scripts": {
     "build": "yarn run build:lib && yarn run build:nbextension && yarn run build:labextension:dev",
