@@ -76,7 +76,7 @@ setup_args = dict(
     python_requires=">=3.8",
     install_requires=[
         'ipywidgets>=7.0.0',
-        'py5>=0.7.2',
+        'py5>=0.8.0a2',
     ],
     description='Jupyter tools for py5',
     long_description=README,
