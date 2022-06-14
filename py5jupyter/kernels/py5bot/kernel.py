@@ -19,16 +19,29 @@
 # *****************************************************************************
 import sys
 
+from ipykernel.ipkernel import IPythonKernel
 from ipykernel.zmqshell import ZMQInteractiveShell
 from IPython.core.interactiveshell import InteractiveShellABC
 from ipykernel.kernelapp import IPKernelApp
 
 from traitlets import Type, Instance, Unicode, List
 
-from ..py5.kernel import Py5Kernel
 from py5_tools import split_setup
 from . import py5bot
 from py5_tools.parsing import TransformDynamicVariablesToCalls, Py5CodeValidation
+from py5_tools import __version__ as __py5_version__
+
+
+_PY5_HELP_LINKS = [
+    {
+        'text': 'py5 Documentation',
+        'url': 'http://py5.ixora.io/'
+    },
+    {
+        'text': 'py5 Function Reference',
+        'url': 'http://py5.ixora.io/reference/sketch.html'
+    },
+]
 
 
 class Py5BotShell(ZMQInteractiveShell):
@@ -40,7 +53,7 @@ class Py5BotShell(ZMQInteractiveShell):
         super().__init__(*args, **kwargs)
         self._py5bot_mgr = py5bot.Py5BotManager()
 
-    banner2 = Unicode("Activating py5bot").tag(config=True)
+    banner2 = Unicode("py5 " + __py5_version__ + " | py5bot kernel 0.1.3a0 | A static drawing environment for py5").tag(config=True)
 
     def run_cell(self, raw_cell, *args, **kwargs):
         # check for special code that should bypass py5bot processing
@@ -63,13 +76,16 @@ class Py5BotShell(ZMQInteractiveShell):
 InteractiveShellABC.register(Py5BotShell)
 
 
-class Py5BotKernel(Py5Kernel):
+class Py5BotKernel(IPythonKernel):
     shell = Instance('IPython.core.interactiveshell.InteractiveShellABC',
                      allow_none=True)
     shell_class = Type(Py5BotShell)
 
+    help_links = List([*IPythonKernel.help_links.default(),
+                       *_PY5_HELP_LINKS]).tag(config=True)
+
     implementation = 'py5bot'
-    implementation_version = '0.7.3.dev0'
+    implementation_version = '0.1.3a0'
 
 
 class Py5BotApp(IPKernelApp):

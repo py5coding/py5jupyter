@@ -27,16 +27,16 @@ from ipykernel.kernelapp import IPKernelApp
 from traitlets import Type, Instance, Unicode, List
 
 from py5_tools.parsing import TransformDynamicVariablesToCalls, Py5CodeValidation
-
+from py5_tools import __version__ as __py5_version__
 
 _PY5_HELP_LINKS = [
     {
-        'text': 'py5 Reference',
-        'url': 'http://py5.ixora.io/reference/'
+        'text': 'py5 Documentation',
+        'url': 'http://py5.ixora.io/'
     },
     {
-        'text': 'py5 Tutorials',
-        'url': 'http://py5.ixora.io/tutorials/'
+        'text': 'py5 Function Reference',
+        'url': 'http://py5.ixora.io/reference/sketch.html'
     },
 ]
 
@@ -58,7 +58,7 @@ class Py5Shell(ZMQInteractiveShell):
 
     ast_transformers = List([TransformDynamicVariablesToCalls(), Py5CodeValidation()]).tag(config=True)
 
-    banner2 = Unicode("Activating py5 imported mode").tag(config=True)
+    banner2 = Unicode("py5 " + __py5_version__ + " | py5 kernel 0.1.3a0 | A Python Jupyter kernel plus py5 in imported mode").tag(config=True)
 
 
 InteractiveShellABC.register(Py5Shell)
@@ -73,7 +73,7 @@ class Py5Kernel(IPythonKernel):
                        *_PY5_HELP_LINKS]).tag(config=True)
 
     implementation = 'py5'
-    implementation_version = '0.7.3.dev0'
+    implementation_version = '0.1.3a0'
 
 
 class Py5App(IPKernelApp):
