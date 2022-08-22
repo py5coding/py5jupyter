@@ -7,6 +7,7 @@ py5jupyter_sdist = sdist/
 
 all: install
 
+# YOU MUST INITIALIZE NPM BEFORE ATTEMPTING TO RUN THE BUILD
 init:
 	npm install
 
