@@ -35,11 +35,11 @@ from py5_tools import __version__ as __py5_version__
 _PY5_HELP_LINKS = [
     {
         'text': 'py5 Documentation',
-        'url': 'http://py5.ixora.io/'
+        'url': 'http://py5coding.org/'
     },
     {
         'text': 'py5 Function Reference',
-        'url': 'http://py5.ixora.io/reference/sketch.html'
+        'url': 'http://py5coding.org/reference/sketch.html'
     },
 ]
 
