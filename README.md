@@ -34,6 +34,7 @@ jupyter nbextension enable --py [--sys-prefix|--user|--system] py5jupyter
 Have a comment or question? We'd love to hear from you! The best ways to reach out are:
 
 * github [discussions](https://github.com/py5coding/py5generator/discussions) and [issues](https://github.com/py5coding/py5generator/issues)
+* Mastodon <a rel="me" href="https://fosstodon.org/@py5coding">fosstodon.org/@py5coding</a>
 * twitter [@py5coding](https://twitter.com/py5coding)
 * [processing foundation discourse](https://discourse.processing.org/)
 
