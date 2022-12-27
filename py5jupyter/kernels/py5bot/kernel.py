@@ -27,7 +27,7 @@ from ipykernel.kernelapp import IPKernelApp
 from traitlets import Type, Instance, Unicode, List
 
 from py5_tools import split_setup
-from . import py5bot
+from py5_tools import py5bot
 from py5_tools.parsing import TransformDynamicVariablesToCalls, Py5CodeValidation
 from py5_tools import __version__ as __py5_version__
 
