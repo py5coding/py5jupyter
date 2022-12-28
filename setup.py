@@ -79,7 +79,7 @@ setup_args = dict(
         'ipython>=8.7',
         'ipywidgets>=7.7',
         'jupyter>=1.0',
-        'py5>=0.8.0a2',  ## TODO: update this
+        'py5>=0.9.0.dev0',
         'traitlets>=5.0',
     ],
     description='Jupyter tools for py5',
