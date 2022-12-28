@@ -27,9 +27,10 @@ from ipykernel.kernelapp import IPKernelApp
 from traitlets import Type, Instance, Unicode, List
 
 from py5_tools import split_setup
-from . import py5bot
-from py5_tools.parsing import TransformDynamicVariablesToCalls, Py5CodeValidation
+from py5_tools.parsing import TransformDynamicVariablesToCalls, Py5CodeValidation, check_for_problems
 from py5_tools import __version__ as __py5_version__
+
+from . import py5bot
 
 
 _PY5_HELP_LINKS = [
@@ -60,7 +61,7 @@ class Py5BotShell(ZMQInteractiveShell):
         if raw_cell.strip().startswith('%%python\n'):
             return super(Py5BotShell, self).run_cell(raw_cell.replace('%%python\n', ''), *args, **kwargs)
 
-        success, result = py5bot.check_for_problems(raw_cell, "<py5bot>")
+        success, result = check_for_problems(raw_cell, "<py5bot>", tool='py5bot')
         if success:
             py5bot_globals, py5bot_settings, py5bot_setup = result
             if split_setup.count_noncomment_lines(py5bot_settings) == 0:
