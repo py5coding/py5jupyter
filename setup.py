@@ -40,6 +40,9 @@ with open('README.md') as f:
 
 VERSION = get_version(pjoin(name, '_version.py'))
 
+packages = find_packages()
+packages.extend(['py5jupyter.labextension', 'py5jupyter.labextension.static', 'py5jupyter.nbextension'])
+
 # Representative files that should exist after a successful build
 jstargets = [
     pjoin(HERE, name, 'nbextension', 'index.js'),
@@ -71,7 +74,7 @@ cmdclass['jsdeps'] = skip_if_exists(jstargets, npm_install)
 setup_args = dict(
     name=name,
     version=VERSION,
-    packages=find_packages(),
+    packages=packages,
     include_package_data=True,
     python_requires=">=3.8",
     install_requires=[
