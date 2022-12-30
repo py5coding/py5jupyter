@@ -16,7 +16,7 @@ $(py5jupyter_build): $(py5jupyter_ts) $(py5jupyter_py)
 
 install: $(py5jupyter_installed)
 $(py5jupyter_installed): $(py5jupyter_build)
-	pip install ./dist/py5jupyter-0.2.0a0.tar.gz
+	pip install ./dist/py5jupyter*.tar.gz
 	touch $(py5jupyter_installed)
 
 clean:
