@@ -1,7 +1,7 @@
 # *****************************************************************************
 #
 #   Part of the py5jupyter (& py5) library
-#   Copyright (C) 2022-2023 Jim Schmitz
+#   Copyright (C) 2022-2024 Jim Schmitz
 #
 #   This library is free software: you can redistribute it and/or modify it
 #   under the terms of the GNU Lesser General Public License as published by
@@ -30,13 +30,10 @@ from py5_tools.parsing import TransformDynamicVariablesToCalls, Py5CodeValidatio
 from py5_tools import __version__ as __py5_version__
 
 _PY5_HELP_LINKS = [
+    {"text": "py5 Documentation", "url": "http://py5coding.org/"},
     {
-        'text': 'py5 Documentation',
-        'url': 'http://py5coding.org/'
-    },
-    {
-        'text': 'py5 Function Reference',
-        'url': 'http://py5coding.org/reference/sketch.html'
+        "text": "py5 Function Reference",
+        "url": "http://py5coding.org/reference/sketch.html",
     },
 ]
 
@@ -51,39 +48,50 @@ from py5 import *
 from py5_tools import sketch_portal
 """
 
-_KERNEL_STARTUP = (_MACOSX_PRE_STARTUP if sys.platform == 'darwin' else "") + _DEFAULT_STARTUP
+_KERNEL_STARTUP = (
+    _MACOSX_PRE_STARTUP if sys.platform == "darwin" else ""
+) + _DEFAULT_STARTUP
 
 
 class Py5Shell(ZMQInteractiveShell):
 
-    ast_transformers = List([TransformDynamicVariablesToCalls(), Py5CodeValidation()]).tag(config=True)
+    ast_transformers = List(
+        [TransformDynamicVariablesToCalls(), Py5CodeValidation()]
+    ).tag(config=True)
 
-    banner2 = Unicode("py5 " + __py5_version__ + " | py5 kernel 0.1.3a0 | A Python Jupyter kernel plus py5 in imported mode").tag(config=True)
+    banner2 = Unicode(
+        "py5 "
+        + __py5_version__
+        + " | py5 kernel 0.1.3a0 | A Python Jupyter kernel plus py5 in imported mode"
+    ).tag(config=True)
 
 
 InteractiveShellABC.register(Py5Shell)
 
 
 class Py5Kernel(IPythonKernel):
-    shell = Instance('IPython.core.interactiveshell.InteractiveShellABC',
-                     allow_none=True)
+    shell = Instance(
+        "IPython.core.interactiveshell.InteractiveShellABC", allow_none=True
+    )
     shell_class = Type(Py5Shell)
 
-    help_links = List([*IPythonKernel.help_links.default(),
-                       *_PY5_HELP_LINKS]).tag(config=True)
+    help_links = List([*IPythonKernel.help_links.default(), *_PY5_HELP_LINKS]).tag(
+        config=True
+    )
 
-    implementation = 'py5'
-    implementation_version = '0.1.3a0'
+    implementation = "py5"
+    implementation_version = "0.1.3a0"
 
 
 class Py5App(IPKernelApp):
-    name = 'py5-kernel'
+    name = "py5-kernel"
 
-    kernel_class = Type('py5jupyter.kernels.py5.Py5Kernel',
-                        klass='ipykernel.kernelbase.Kernel').tag(config=True)
+    kernel_class = Type(
+        "py5jupyter.kernels.py5.Py5Kernel", klass="ipykernel.kernelbase.Kernel"
+    ).tag(config=True)
 
-    exec_lines = List(Unicode(), [
-        _KERNEL_STARTUP
-    ]).tag(config=True)
+    exec_lines = List(Unicode(), [_KERNEL_STARTUP]).tag(config=True)
 
-    extensions = List(Unicode(), ['py5_tools.magics', 'py5_tools.magics.py5bot']).tag(config=True)
+    extensions = List(Unicode(), ["py5_tools.magics", "py5_tools.magics.py5bot"]).tag(
+        config=True
+    )

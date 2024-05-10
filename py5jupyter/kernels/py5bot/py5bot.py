@@ -1,7 +1,7 @@
 # *****************************************************************************
 #
 #   Part of the py5jupyter (& py5) library
-#   Copyright (C) 2022-2023 Jim Schmitz
+#   Copyright (C) 2022-2024 Jim Schmitz
 #
 #   This library is free software: you can redistribute it and/or modify it
 #   under the terms of the GNU Lesser General Public License as published by
@@ -129,17 +129,19 @@ class Py5BotManager:
     def __init__(self):
         self.tempdir = Path(tempfile.TemporaryDirectory().name)
         self.tempdir.mkdir(parents=True, exist_ok=True)
-        self.settings_filename = self.tempdir / '_PY5_STATIC_SETTINGS_CODE_.py'
-        self.setup_filename = self.tempdir / '_PY5_STATIC_SETUP_CODE_.py'
+        self.settings_filename = self.tempdir / "_PY5_STATIC_SETTINGS_CODE_.py"
+        self.setup_filename = self.tempdir / "_PY5_STATIC_SETUP_CODE_.py"
         self.startup_code = PY5BOT_CODE_STARTUP
-        self.run_code = PY5BOT_CODE.format(self.settings_filename.as_posix(), self.setup_filename.as_posix())
+        self.run_code = PY5BOT_CODE.format(
+            self.settings_filename.as_posix(), self.setup_filename.as_posix()
+        )
 
     def write_code(self, global_code, settings_code, setup_code):
-        with open(self.settings_filename, 'w') as f:
-            f.write('\n' * sum(c == '\n' for c in global_code))
+        with open(self.settings_filename, "w") as f:
+            f.write("\n" * sum(c == "\n" for c in global_code))
             f.write(settings_code)
 
-        with open(self.setup_filename, 'w') as f:
+        with open(self.setup_filename, "w") as f:
             f.write(global_code)
-            f.write('\n' * sum(c == '\n' for c in settings_code))
+            f.write("\n" * sum(c == "\n" for c in settings_code))
             f.write(setup_code)

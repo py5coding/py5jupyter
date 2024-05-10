@@ -1,7 +1,7 @@
 # *****************************************************************************
 #
 #   Part of the py5jupyter (& py5) library
-#   Copyright (C) 2022-2023 Jim Schmitz
+#   Copyright (C) 2022-2024 Jim Schmitz
 #
 #   This library is free software: you can redistribute it and/or modify it
 #   under the terms of the GNU Lesser General Public License as published by
@@ -17,5 +17,5 @@
 #   along with this library. If not, see <https://www.gnu.org/licenses/>.
 #
 # *****************************************************************************
-version_info = (0, 2, 0, 'a0')
+version_info = (0, 2, 0, "a0")
 __version__ = ".".join(map(str, version_info))
