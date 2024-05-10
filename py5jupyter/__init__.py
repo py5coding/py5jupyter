@@ -1,7 +1,7 @@
 # *****************************************************************************
 #
 #   Part of the py5jupyter (& py5) library
-#   Copyright (C) 2022-2023 Jim Schmitz
+#   Copyright (C) 2022-2024 Jim Schmitz
 #
 #   This library is free software: you can redistribute it and/or modify it
 #   under the terms of the GNU Lesser General Public License as published by
@@ -33,10 +33,12 @@ def _jupyter_labextension_paths():
         from `src` directory into <jupyter path>/labextensions/<dest> directory
         during widget installation
     """
-    return [{
-        'src': 'labextension',
-        'dest': 'jupyter-py5',
-    }]
+    return [
+        {
+            "src": "labextension",
+            "dest": "jupyter-py5",
+        }
+    ]
 
 
 def _jupyter_nbextension_paths():
@@ -55,9 +57,11 @@ def _jupyter_nbextension_paths():
     require: Path to importable AMD Javascript module inside the
         <jupyter path>/nbextensions/<dest> directory
     """
-    return [{
-        'section': 'notebook',
-        'src': 'nbextension',
-        'dest': 'py5jupyter',
-        'require': 'py5jupyter/extension'
-    }]
+    return [
+        {
+            "section": "notebook",
+            "src": "nbextension",
+            "dest": "py5jupyter",
+            "require": "py5jupyter/extension",
+        }
+    ]

@@ -1,7 +1,7 @@
 # *****************************************************************************
 #
 #   Part of the py5jupyter (& py5) library
-#   Copyright (C) 2022-2023 Jim Schmitz
+#   Copyright (C) 2022-2024 Jim Schmitz
 #
 #   This library is free software: you can redistribute it and/or modify it
 #   under the terms of the GNU Lesser General Public License as published by
@@ -29,7 +29,13 @@ from IPython.utils.tempdir import TemporaryDirectory
 
 
 kernel_json = {
-    "argv": [sys.executable, "-m", "py5jupyter.kernels.py5bot", "-f", "{connection_file}"],
+    "argv": [
+        sys.executable,
+        "-m",
+        "py5jupyter.kernels.py5bot",
+        "-f",
+        "{connection_file}",
+    ],
     "display_name": "py5bot",
     "language": "python",
 }
@@ -38,16 +44,15 @@ kernel_json = {
 def install_py5bot_kernel_spec(user=True, prefix=None):
     with TemporaryDirectory() as td:
         os.chmod(td, 0o755)  # Starts off as 700, not user readable
-        with open(Path(td) / 'kernel.json', 'w') as f:
+        with open(Path(td) / "kernel.json", "w") as f:
             json.dump(kernel_json, f, sort_keys=True)
 
         # Copy any resources
-        for file in (Path(__file__).parent / 'resources').glob('*'):
+        for file in (Path(__file__).parent / "resources").glob("*"):
             shutil.copy(file, Path(td) / file.name)
 
-        print('Installing py5bot Jupyter kernel spec')
-        KernelSpecManager().install_kernel_spec(
-            td, 'py5bot', user=user, prefix=prefix)
+        print("Installing py5bot Jupyter kernel spec")
+        KernelSpecManager().install_kernel_spec(td, "py5bot", user=user, prefix=prefix)
 
 
 def _is_root():
@@ -59,13 +64,21 @@ def _is_root():
 
 def main(argv=None):
     ap = argparse.ArgumentParser()
-    ap.add_argument('--user', action='store_true',
-                    help="Install to the per-user kernels registry. Default if not root.")
-    ap.add_argument('--sys-prefix', action='store_true',
-                    help="Install to sys.prefix (e.g. a virtualenv or conda env)")
-    ap.add_argument('--prefix',
-                    help="Install to the given prefix. "
-                    "Kernelspec will be installed in {PREFIX}/share/jupyter/kernels/")
+    ap.add_argument(
+        "--user",
+        action="store_true",
+        help="Install to the per-user kernels registry. Default if not root.",
+    )
+    ap.add_argument(
+        "--sys-prefix",
+        action="store_true",
+        help="Install to sys.prefix (e.g. a virtualenv or conda env)",
+    )
+    ap.add_argument(
+        "--prefix",
+        help="Install to the given prefix. "
+        "Kernelspec will be installed in {PREFIX}/share/jupyter/kernels/",
+    )
     args = ap.parse_args(argv)
 
     if args.sys_prefix:
@@ -76,5 +89,5 @@ def main(argv=None):
     install_py5bot_kernel_spec(user=args.user, prefix=args.prefix)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
