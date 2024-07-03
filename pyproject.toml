@@ -32,7 +32,7 @@ classifiers = [
     "Topic :: Multimedia :: Graphics",
 ]
 dependencies = [
-    "ipykernel>=6.19",
+    "ipykernel>=6.29.5",
     "ipython>=8.7",
     "ipywidgets>=7.7",
     "jupyter>=1.0",
