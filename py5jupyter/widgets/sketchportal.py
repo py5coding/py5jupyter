@@ -21,12 +21,15 @@ import time
 
 import numpy as np
 
-from ipywidgets import DOMWidget
+# from ipywidgets import DOMWidget
 from traitlets import Unicode, CUnicode, Bytes
 from ._frontend import module_name, module_version
 
 
-class Py5SketchPortal(DOMWidget):
+class Py5SketchPortal:
+    pass
+
+class Py5SketchPortalArchived:  # (DOMWidget):
     _model_module = Unicode(module_name).tag(sync=True)
     _model_module_version = Unicode(module_version).tag(sync=True)
     _view_module = Unicode(module_name).tag(sync=True)

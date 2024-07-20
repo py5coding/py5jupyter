@@ -1,7 +1,6 @@
 [build-system]
 requires = [
     "hatchling",
-    "jupyterlab==3.*",
 ]
 build-backend = "hatchling.build"
 
@@ -9,7 +8,7 @@ build-backend = "hatchling.build"
 name = "py5jupyter"
 description = "Jupyter tools for py5"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 authors = [
     { name = "Jim Schmitz", email = "jim@ixora.io" },
 ]
@@ -26,20 +25,21 @@ classifiers = [
     "Intended Audience :: Science/Research",
     "License :: OSI Approved :: GNU Lesser General Public License v2 (LGPLv2)",
     "Programming Language :: Java",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Topic :: Artistic Software",
     "Topic :: Multimedia :: Graphics",
 ]
 dependencies = [
     "ipykernel>=6.29.5",
-    "ipython>=8.7",
-    "ipywidgets>=7.7",
+    "ipython>=8.18",
     "jupyter>=1.0",
-    "py5>=0.9.0a0",
-    "traitlets>=5.0",
+    "py5>=0.10.1a1",
+    "traitlets>=5.14",
 ]
-version = "0.2.0a0"
+version = "0.2.1a0"
 
 [project.license]
 file = "LICENSE"
@@ -69,38 +69,38 @@ Download = "https://pypi.org/project/py5jupyter"
 Homepage = "https://py5coding.org/"
 "Source Code" = "https://github.com/py5coding/py5jupyter"
 
-[tool.hatch.build]
-artifacts = [
-    "py5jupyter/nbextension/index.*",
-    "py5jupyter/labextension/*.tgz",
-    "py5jupyter/labextension",
-]
+# [tool.hatch.build]
+# artifacts = [
+#     "py5jupyter/nbextension/index.*",
+#     "py5jupyter/labextension/*.tgz",
+#     "py5jupyter/labextension",
+# ]
 
-[tool.hatch.build.targets.wheel.shared-data]
-"py5jupyter/nbextension" = "share/jupyter/nbextensions/py5jupyter"
-"py5jupyter/labextension" = "share/jupyter/labextensions/jupyter-py5"
-"./install.json" = "share/jupyter/labextensions/jupyter-py5/install.json"
-"./py5jupyter.json" = "etc/jupyter/nbconfig/notebook.d/py5jupyter.json"
+# [tool.hatch.build.targets.wheel.shared-data]
+# "py5jupyter/nbextension" = "share/jupyter/nbextensions/py5jupyter"
+# "py5jupyter/labextension" = "share/jupyter/labextensions/jupyter-py5"
+# "./install.json" = "share/jupyter/labextensions/jupyter-py5/install.json"
+# "./py5jupyter.json" = "etc/jupyter/nbconfig/notebook.d/py5jupyter.json"
 
 [tool.hatch.build.targets.sdist]
 exclude = [
     ".github",
 ]
 
-[tool.hatch.build.hooks.jupyter-builder]
-ensured-targets = [
-    "py5jupyter/nbextension/index.js",
-    "py5jupyter/labextension/package.json",
-]
-skip-if-exists = [
-    "py5jupyter/nbextension/index.js",
-    "py5jupyter/labextension/package.json",
-]
-dependencies = [
-    "hatch-jupyter-builder>=0.8.2",
-]
-build-function = "hatch_jupyter_builder.npm_builder"
+# [tool.hatch.build.hooks.jupyter-builder]
+# ensured-targets = [
+#     "py5jupyter/nbextension/index.js",
+#     "py5jupyter/labextension/package.json",
+# ]
+# skip-if-exists = [
+#     "py5jupyter/nbextension/index.js",
+#     "py5jupyter/labextension/package.json",
+# ]
+# dependencies = [
+#     "hatch-jupyter-builder>=0.8.2",
+# ]
+# build-function = "hatch_jupyter_builder.npm_builder"
 
-[tool.hatch.build.hooks.jupyter-builder.build-kwargs]
-path = "."
-build_cmd = "build:prod"
+# [tool.hatch.build.hooks.jupyter-builder.build-kwargs]
+# path = "."
+# build_cmd = "build:prod"
