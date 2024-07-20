@@ -22,12 +22,14 @@ import time
 import numpy as np
 
 # from ipywidgets import DOMWidget
-from traitlets import Unicode, CUnicode, Bytes
+from traitlets import Bytes, CUnicode, Unicode
+
 from ._frontend import module_name, module_version
 
 
 class Py5SketchPortal:
     pass
+
 
 class Py5SketchPortalArchived:  # (DOMWidget):
     _model_module = Unicode(module_name).tag(sync=True)
@@ -62,7 +64,7 @@ class Py5SketchPortalArchived:  # (DOMWidget):
     # # Events
     def _handle_frontend_event(self, _, content, buffers):
         import py5
-        from py5 import Py5MouseEvent, Py5KeyEvent
+        from py5 import Py5KeyEvent, Py5MouseEvent
 
         event_type = content.get("event", "")
         event_x = int(content.get("x", 0))

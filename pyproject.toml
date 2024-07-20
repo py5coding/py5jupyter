@@ -69,38 +69,7 @@ Download = "https://pypi.org/project/py5jupyter"
 Homepage = "https://py5coding.org/"
 "Source Code" = "https://github.com/py5coding/py5jupyter"
 
-# [tool.hatch.build]
-# artifacts = [
-#     "py5jupyter/nbextension/index.*",
-#     "py5jupyter/labextension/*.tgz",
-#     "py5jupyter/labextension",
-# ]
-
-# [tool.hatch.build.targets.wheel.shared-data]
-# "py5jupyter/nbextension" = "share/jupyter/nbextensions/py5jupyter"
-# "py5jupyter/labextension" = "share/jupyter/labextensions/jupyter-py5"
-# "./install.json" = "share/jupyter/labextensions/jupyter-py5/install.json"
-# "./py5jupyter.json" = "etc/jupyter/nbconfig/notebook.d/py5jupyter.json"
-
 [tool.hatch.build.targets.sdist]
 exclude = [
     ".github",
 ]
-
-# [tool.hatch.build.hooks.jupyter-builder]
-# ensured-targets = [
-#     "py5jupyter/nbextension/index.js",
-#     "py5jupyter/labextension/package.json",
-# ]
-# skip-if-exists = [
-#     "py5jupyter/nbextension/index.js",
-#     "py5jupyter/labextension/package.json",
-# ]
-# dependencies = [
-#     "hatch-jupyter-builder>=0.8.2",
-# ]
-# build-function = "hatch_jupyter_builder.npm_builder"
-
-# [tool.hatch.build.hooks.jupyter-builder.build-kwargs]
-# path = "."
-# build_cmd = "build:prod"

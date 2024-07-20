@@ -1,13 +1,8 @@
-# py5jupyter_ts = $(shell find src/ -name "*.ts")
 py5jupyter_py = $(shell find py5jupyter/ -name "*.py")
 py5jupyter_build = dist/
 py5jupyter_installed = .install_py5jupyter.nogit
 
 all: install
-
-# # YOU MUST INITIALIZE NPM BEFORE ATTEMPTING TO RUN THE BUILD
-# init:
-# 	npm install
 
 build: $(py5jupyter_build)
 $(py5jupyter_build): $(py5jupyter_py)
