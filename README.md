@@ -2,9 +2,9 @@
 
 ![py5 logo](https://py5coding.org/_static/logo.png)
 
-[![py5jupyter monthly downloads](https://pepy.tech/badge/py5jupyter/month)](https://pepy.tech/project/py5jupyter)
+[![py5jupyter monthly downloads](https://static.pepy.tech/badge/py5jupyter/month)](https://pepy.tech/project/py5jupyter)
 
-[![py5jupyter weekly downloads](https://pepy.tech/badge/py5jupyter/week)](https://pepy.tech/project/py5jupyter)
+[![py5jupyter weekly downloads](https://static.pepy.tech/badge/py5jupyter/week)](https://pepy.tech/project/py5jupyter)
 
 py5 is a new version of [**Processing**][processing] for Python 3.9+. It makes the Java [**Processing**][processing] jars available to the CPython interpreter using [**JPype**][jpype]. It can do just about everything [**Processing**][processing] can do, except with Python instead of Java code.
 
