@@ -1,7 +1,7 @@
 # *****************************************************************************
 #
 #   Part of the py5jupyter (& py5) library
-#   Copyright (C) 2022-2024 Jim Schmitz
+#   Copyright (C) 2022-2025 Jim Schmitz
 #
 #   This library is free software: you can redistribute it and/or modify it
 #   under the terms of the GNU Lesser General Public License as published by
@@ -17,16 +17,15 @@
 #   along with this library. If not, see <https://www.gnu.org/licenses/>.
 #
 # *****************************************************************************
-import os
-import sys
-import shutil
-from pathlib import Path
 import argparse
 import json
+import os
+import shutil
+import sys
+from pathlib import Path
 
-from jupyter_client.kernelspec import KernelSpecManager
 from IPython.utils.tempdir import TemporaryDirectory
-
+from jupyter_client.kernelspec import KernelSpecManager
 
 kernel_json = {
     "argv": [sys.executable, "-m", "py5jupyter.kernels.py5", "-f", "{connection_file}"],
