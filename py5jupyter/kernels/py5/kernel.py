@@ -1,7 +1,7 @@
 # *****************************************************************************
 #
 #   Part of the py5jupyter (& py5) library
-#   Copyright (C) 2022-2024 Jim Schmitz
+#   Copyright (C) 2022-2025 Jim Schmitz
 #
 #   This library is free software: you can redistribute it and/or modify it
 #   under the terms of the GNU Lesser General Public License as published by
@@ -20,14 +20,12 @@
 import sys
 
 from ipykernel.ipkernel import IPythonKernel
+from ipykernel.kernelapp import IPKernelApp
 from ipykernel.zmqshell import ZMQInteractiveShell
 from IPython.core.interactiveshell import InteractiveShellABC
-from ipykernel.kernelapp import IPKernelApp
-
-from traitlets import Type, Instance, Unicode, List
-
-from py5_tools.parsing import TransformDynamicVariablesToCalls, Py5CodeValidation
 from py5_tools import __version__ as __py5_version__
+from py5_tools.parsing import Py5CodeValidation, TransformDynamicVariablesToCalls
+from traitlets import Instance, List, Type, Unicode
 
 _PY5_HELP_LINKS = [
     {"text": "py5 Documentation", "url": "http://py5coding.org/"},
