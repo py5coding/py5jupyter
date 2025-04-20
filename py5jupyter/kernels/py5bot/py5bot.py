@@ -39,7 +39,7 @@ def _PY5BOT_altered_size(*args):
     if len(args) == 2:
         args = *args, HIDDEN
     elif len(args) >= 3 and isinstance(renderer := args[2], str):
-        renderer_name = {SVG: 'SVG', PDF: 'PDF', DXF: 'DXF', P2D: 'P2D', P3D: 'P3D', HIDDEN: 'HIDDEN', JAVA2D: 'JAVA2D'}.get(renderer, renderer)
+        renderer_name = {SVG: 'SVG', PDF: 'PDF', DXF: 'DXF', P2D: 'P2D', P3D: 'P3D', HIDDEN: 'HIDDEN', JAVA2D: 'JAVA2D', FX2D: 'FX2D'}.get(renderer, renderer)
         if renderer in [SVG, PDF]:
             if not (len(args) >= 4 and isinstance(args[3], str)):
                 print(f'If you want to use the {renderer_name} renderer, the 4th parameter to size() must be a filename to save the {renderer_name} to.')
