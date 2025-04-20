@@ -42,6 +42,12 @@ get_ipython().run_line_magic('gui', 'osx')
 _DEFAULT_STARTUP = """
 import py5_tools
 py5_tools.set_imported_mode(True)
+
+try:
+    import py5javafx
+except ImportError:
+    pass
+
 from py5 import *
 from py5_tools import sketch_portal
 """
