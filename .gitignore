@@ -154,3 +154,5 @@ py5jupyter/labextension/*.tgz
 
 # Packed lab extensions
 py5jupyter/labextension
+
+*.nogit
